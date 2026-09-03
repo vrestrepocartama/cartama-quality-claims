@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Cartama — Quality Claims</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+:root{
+  --p:#2D6A4F; --pD:#1B4332; --a:#40916C; --pL:#D8F3DC;
+  --o:#E76F51; --r:#CC0000; --g:#6C757D; --b:#E6EAE8;
+  --shadow-1:0 1px 2px rgba(16,40,30,.05), 0 2px 8px rgba(16,40,30,.05);
+  --shadow-2:0 4px 12px rgba(16,40,30,.08), 0 12px 32px rgba(16,40,30,.07);
+  --shadow-3:0 18px 46px rgba(16,40,30,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  background:#F2F5F3;
+  background-image:radial-gradient(900px 500px at 100% -5%, #E4EFE8 0%, transparent 60%),
+                   radial-gradient(700px 400px at -10% 0%, #EAF3ED 0%, transparent 55%);
+  background-attachment:fixed;
+  font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  color:#2B3230;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font-family:inherit}
+
+/* ---------- Animaciones ---------- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{0%{opacity:0;transform:scale(.94)}60%{transform:scale(1.02)}100%{opacity:1;transform:scale(1)}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(231,111,81,.5)}50%{box-shadow:0 0 0 7px rgba(231,111,81,0)}}
+.fade-in{animation:fadeUp .3s cubic-bezier(.2,.7,.3,1) both}
+.fade-soft{animation:fadeIn .35s ease both}
+.pop-in{animation:popIn .28s cubic-bezier(.2,.8,.3,1) both}
+.slide-in{animation:slideRight .3s cubic-bezier(.2,.7,.3,1) both}
+.pulse{animation:pulseDot 1.9s infinite}
+.d1{animation-delay:.04s}.d2{animation-delay:.08s}.d3{animation-delay:.12s}
+.d4{animation-delay:.16s}.d5{animation-delay:.2s}.d6{animation-delay:.24s}
+
+/* ---------- Micro-interacciones ---------- */
+.lift{transition:transform .18s cubic-bezier(.2,.7,.3,1), box-shadow .18s ease, border-color .18s ease}
+.lift:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
+.btn{transition:transform .14s ease, box-shadow .18s ease, filter .18s ease, background .18s ease}
+.btn:hover:not(:disabled){filter:brightness(1.05);transform:translateY(-1px);box-shadow:var(--shadow-2)}
+.btn:active:not(:disabled){transform:translateY(0);filter:brightness(.97)}
+.btn:disabled{cursor:not-allowed;opacity:.75}
+.opt{transition:all .16s cubic-bezier(.2,.7,.3,1)}
+.opt:hover{border-color:var(--a);transform:translateY(-1px)}
+.rowx{transition:background .15s ease}
+.rowx:hover{background:#F3F8F5 !important}
+.tabx{transition:color .16s ease, border-color .16s ease}
+
+/* ---------- Formularios ---------- */
+input:focus,select:focus,textarea:focus{
+  border-color:var(--p) !important;
+  box-shadow:0 0 0 3px rgba(45,106,79,.13);
+}
+::placeholder{color:#A6AEAB}
+select{appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' fill='none' stroke='%236C757D' stroke-width='1.6' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:32px !important}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#CBD6D0;border-radius:8px;border:3px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:#AEBEB6;background-clip:content-box}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- Layout responsive ---------- */
+.detail-grid{display:grid;grid-template-columns:266px minmax(0,1fr);gap:18px;align-items:start}
+.sticky-side{position:sticky;top:18px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.defect-grid{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:820px){.defect-grid{grid-template-columns:1fr 1fr;gap:0 14px}}
+@media(max-width:900px){
+  .detail-grid{grid-template-columns:1fr}
+  .sticky-side{position:static}
+}
+@media(max-width:720px){
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .hide-sm{display:none !important}
+  .stack-sm{flex-direction:column !important;align-items:stretch !important}
+  .full-sm{width:100% !important}
+  .pad-sm{padding:14px !important}
+}
+@media(min-width:721px){.only-sm{display:none !important}}
+</style>
+</head>
+<body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body>
+</html>
